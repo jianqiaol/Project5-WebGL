@@ -15,29 +15,34 @@
 
 <script id="vs" type="x-shader/x-vertex">
     attribute vec2 position;
-    
     uniform mat4 u_modelViewPerspective;
-    
+    uniform float u_time;
+    uniform vec4 low_color;
+    uniform vec4 high_color;
+    varying vec4 fs_color;
     void main(void)
     {
       // NOTE : according to the WebGL standard, 0.0f is not accepted
-		  float height = 0.0;
-
+      //float height = 0.0;
+      float s_contrib = sin(position.x*2.0*3.14159 + u_time);
+      float t_contrib = cos(position.y*2.0*3.14159 + u_time);
+      float height = s_contrib*t_contrib;
+      float alpha=(height+1.0)/2.0;
+      fs_color=mix(low_color,high_color,alpha);
       // NOTE : gl_Position is always a vec4
-		  gl_Position = u_modelViewPerspective * vec4(vec3(position, height), 1.0);
+      gl_Position = u_modelViewPerspective * vec4(vec3(position, height), 1.0);
     }
 </script>
 
 <script id="fs" type="x-shader/x-fragment">
     precision mediump float;
-
-    uniform vec4 u_color;
-
+    
+    varying vec4 fs_color;
     void main(void)
     {
       // NOTE : gl_FragColor is always a vec4
-		  gl_FragColor = u_color;
-    }    
+		  gl_FragColor = fs_color;
+    }
 </script>
 
 <script>
@@ -46,6 +51,9 @@
   var heightLocation = 1;
   var u_modelViewPerspectiveLocation;
   var u_color;
+  var low_colorLocation;
+  var high_colorLocation;
+  var u_timeLocation;
   
   var heights;
   var numberOfIndices;
@@ -53,7 +61,12 @@
   var eye = [2.0, 1.0, 3.0];
   var center = [0.0, 0.0, 0.0];
   var up = [0.0, 0.0, 1.0];
-
+  //time control
+  var time=0.0;
+  var dt=0.01;
+  //color for lowest and highest points
+  var lowColor=[0.9,0.3,0.4,0.0];
+  var highColor=[0.1,0.8,0.9,0.0];
 
   var NUM_WIDTH_PTS = 32;
   var NUM_HEIGHT_PTS = 32;
@@ -100,6 +113,12 @@
 
   function animate(){
     // Update
+    time=time+dt;
+    if(time>3.14)
+    {
+        time=0.0;
+    }
+
     var model = mat4.create();
     mat4.identity(model);
     mat4.translate(model, [-0.5, -0.5, 0.0]);
@@ -110,8 +129,12 @@
 
     // Render  
     context.clear(context.COLOR_BUFFER_BIT | context.DEPTH_BUFFER_BIT);
-
-    context.uniformMatrix4fv(u_modelViewPerspectiveLocation, false, mvp); 
+    //send uniform value
+    context.uniformMatrix4fv(u_modelViewPerspectiveLocation, false, mvp);
+    context.uniform1f(u_timeLocation,time);
+    context.uniform4fv(low_colorLocation,lowColor);
+    context.uniform4fv(high_colorLocation,highColor);
+    
     context.drawElements(context.LINES, numberOfIndices, context.UNSIGNED_SHORT,0);
 
     window.requestAnimFrame(animate);
@@ -126,6 +149,10 @@
 		context.bindAttribLocation(program, positionLocation, "position");
 		u_modelViewPerspectiveLocation = context.getUniformLocation(program,"u_modelViewPerspective");
     u_colorLocation = context.getUniformLocation(program, "u_color");
+    low_colorLocation=context.getUniformLocation(program,"low_color");
+    high_colorLocation=context.getUniformLocation(program,"high_color");
+    u_timeLocation=context.getUniformLocation(program,"u_time");
+    
 
     context.useProgram(program);
   }
