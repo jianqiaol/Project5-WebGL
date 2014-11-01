@@ -65,8 +65,8 @@
   var time=0.0;
   var dt=0.01;
   //color for lowest and highest points
-  var lowColor=[0.9,0.3,0.4,0.0];
-  var highColor=[0.1,0.8,0.9,0.0];
+  var lowColor=[0,0,0,0.0];
+  var highColor=[0,0,0,0.0];
 
   var NUM_WIDTH_PTS = 32;
   var NUM_HEIGHT_PTS = 32;
@@ -77,12 +77,51 @@
 
   var persp = mat4.create();
   var view = mat4.create();
-    
+  
+  
+  
+  var colorPicker = function() {
+      //default color
+     this.low=[255,0,0,1];
+      this.high=[0,255,0,1];
+  };
+
+/*
+var ColorControl = function () {
+    this.minCol = [255,0,0,1];
+    this.maxCol = [0, 0, 255,1];
+};*/
+
+
+  
   // Function called when the window is loaded
   window.onload = function() {
-    // Add GUI component 
+    // Add GUI component
+    var picker=new colorPicker();
     var gui = new dat.GUI();
+    for(var i=0;i<4;i++)
+    {
+        lowColor[i]=picker.low[i]/255.0;
+        highColor[i]=picker.high[i]/255.0;
+    }
 
+    gui.addColor(picker,'low').onChange(function(){
+        for(var i=0;i<4;i++)
+        {
+            lowColor[i]=picker.low[i]/255.0;
+            highColor[i]=picker.high[i]/255.0;
+        }
+    });
+    gui.addColor(picker,'high').onChange(function(){
+        for(var i=0;i<4;i++)
+        {
+            lowColor[i]=picker.low[i]/255.0;
+            highColor[i]=picker.high[i]/255.0;
+        }
+    });
+    
+    
+    
     init();
 
     animate();
