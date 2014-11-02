@@ -1,0 +1,2 @@
+http://nehe.gamedev.net/article/glsl_an_introduction/25007/ 
+http://www.lwjgl.org/wiki/index.php?title=GLSL_Tutorial:_Communicating_with_Shaders
