@@ -85,14 +85,21 @@
         float specular = max(dot(toReflectedLight, eyeToPosition), 0.0);
         specular = pow(specular, 20.0);
         
-        float gammaCorrect = 1.0/1.2; //gamma correct by 1/1.2
+        float gammaCorrect = 1.0/1.4; //gamma correct by 1/1.2
         
         vec3 dayColor = texture2D(u_DayDiffuse, v_Texcoord).rgb;
         vec3 nightColor = texture2D(u_Night, v_Texcoord).rgb;
+        //for specular map
+        vec3 maskColor=texture2D(u_Bump,v_Texcoord).rgb;
+        if(maskColor.r>0.0)
+        {
+            specular=0.0;
+        }
+        
         //apply gamma correction to nighttime texture
         nightColor = pow(nightColor,vec3(gammaCorrect));
         
-        vec3 day_color = ((1.2 * diffuse) + (0.2 * specular)) * dayColor;
+        vec3 day_color = ((1.2 * diffuse) + (0.5 * specular)) * dayColor;
         vec3 color=mix(day_color,nightColor,(night_flag+1.0)/2.0);
         gl_FragColor = vec4(color, 1.0);
     }
