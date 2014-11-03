@@ -28,6 +28,11 @@ By adjusting the normal for each vertex based on the height map, we can add bump
 ![](step3_bumpMap.png)
 
 * Add Rim lighting
+
+If the normal direction of a fragment is orthrogonal or close to orthrogonal to camera direction, we add some blue-ish color to it.
+
+![](step4_addRim.png)
+
 * Add water simulation
 
 ![](ripple.png)
