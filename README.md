@@ -10,6 +10,7 @@ The original code generate this basic globe with Earth terrain color mapping loo
 ![](step0_nochange.png)
 
 *Night light
+
 By taking the dot product of the light direction and normal direciton of each vertex, I generated a night_flag, from -1 to 1. negative means day time while positive means night time. Then using the mix function I got this:
 
 ![](step1_addNight.png)
