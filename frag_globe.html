@@ -79,6 +79,18 @@
         // normalized eye-to-position vector in camera coordinates
         vec3 eyeToPosition = normalize(v_Position);
         
+        
+        //bump map
+        vec2 bump_center_coord=v_Texcoord;
+        vec2 bump_right_coord=bump_center_coord+vec2(1.0/1024.0,0.0);
+        vec2 bump_top_coord=bump_center_coord+vec2(0.0,1.0/512.0);
+        float bump_center=texture2D(u_Bump,bump_center_coord).x;
+        float bump_right=texture2D(u_Bump,bump_right_coord).x;
+        float bump_top=texture2D(u_Bump,bump_top_coord).x;
+        vec3 bump_normal=eastNorthUpToEyeCoordinates(v_positionMC,v_Normal)*normalize(vec3(bump_center-bump_right,bump_center-bump_top,0.15));
+        
+        float bump_diffuse=clamp(dot(-u_CameraSpaceDirLight, bump_normal), 0.0, 1.0);
+        
         float diffuse = clamp(dot(-u_CameraSpaceDirLight, normal), 0.0, 1.0);
         
         vec3 toReflectedLight = reflect(-u_CameraSpaceDirLight, normal);
@@ -97,7 +109,7 @@
         {
             specular=0.0;
         }
-        vec3 day_color = ((1.5 * diffuse) + (0.5 * specular)) * dayColor;
+        vec3 day_color = ((0.8 * bump_diffuse) + (0.5 * specular)) * dayColor;
         //for clouds
         vec2 v_cloud=v_Texcoord+vec2(u_time*0.02,0.0);
         //vec2 v_cloud=v_Texcoord;
@@ -105,15 +117,18 @@
         vec3 cloudColor=texture2D(u_Cloud,v_cloud).rgb;
         vec3 cloudTrans=texture2D(u_CloudTrans,v_cloud).rgb;
         //day cloud
-        vec3 dayCloud=cloudColor*(1.0-cloudTrans.r)*diffuse;
-        vec3 nightCloud=cloudColor*(1.0-cloudTrans.r);
+        vec3 dayCloud=cloudColor;
+        vec3 nightCloud=vec3(0.0,0.0,0.0);
         //mixed day and night cloud
-        vec3 mixed_dayColor=mix(day_color,dayCloud,0.6);
-        vec3 mixed_nightColor=mix(nightColor,nightCloud,0.2);
-        
-        
+        vec3 mixed_dayColor=mix(dayCloud,day_color,cloudTrans.r);
+        vec3 mixed_nightColor=mix(nightCloud,nightColor,cloudTrans.r);
         
         vec3 color=mix(mixed_dayColor,mixed_nightColor,(night_flag+1.0)/2.0);
+        float rimfactor=clamp(dot(v_Normal,v_Position)+1.0,0.0,0.5);
+        if(rimfactor>0.0)
+        {
+            color+=vec3(rimfactor/4.0,rimfactor/2.0,rimfactor/2.0);
+        }
         gl_FragColor = vec4(color, 1.0);
     }
 
