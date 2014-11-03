@@ -1,8 +1,9 @@
 
 This project has a wave renderer and a globe renderer implemented using WebGL.
-To run the demo, you need a WebGL capable browser. FireFox is recommended.
+To run the demo, you need a WebGL capable browser like FireFox.
 
 ![](step5_addwatersimulation.png)
+![](ripple.png)
 
 -------------------------------------------------------------------------------
 INTRODUCTION:
