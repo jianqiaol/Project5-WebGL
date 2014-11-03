@@ -35,6 +35,10 @@ If the normal direction of a fragment is orthrogonal or close to orthrogonal to 
 
 * Add water simulation
 
+By adding some noise to the water diffuse factor, we can make a shiny ocean surface. The random generator was found here: http://www.java-gaming.org/index.php?topic=28018.0
+
+![](step5_addwatersimulation.png)
+
 ![](ripple.png)
 
 
