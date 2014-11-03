@@ -5,6 +5,11 @@ To run the demo, you need a WebGL capable browser like FireFox.
 ![](step5_addwatersimulation.png)
 
 ###Walk through
+The original code generate this basic globe with Earth terrain color mapping looks like this:
+
+![](step0_nochange.png)
+
+
 
 ![](ripple.png)
 
