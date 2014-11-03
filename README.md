@@ -22,6 +22,11 @@ Using the cloud map and cloudTrans map, I mixed the terrian color with cloud. Th
 ![](step2_addCloud.png)
 
 * Add Bump mapping
+
+By adjusting the normal for each vertex based on the height map, we can add bump mapping. 
+
+![](step3_bumpMap.png)
+
 * Add Rim lighting
 * Add water simulation
 
