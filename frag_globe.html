@@ -110,7 +110,7 @@ void main(void)
     float specular = max(dot(toReflectedLight, eyeToPosition), 0.0);
     specular = pow(specular, 20.0);
     
-    float gammaCorrect = 1.0/1.4; //gamma correct by 1/1.2
+    float gammaCorrect = 1.0/1.3; //gamma correct by 1/1.2
     
     vec3 dayColor = texture2D(u_DayDiffuse, v_Texcoord).rgb;
     vec3 nightColor = texture2D(u_Night, v_Texcoord).rgb;
@@ -141,7 +141,7 @@ void main(void)
     
     
     //for clouds
-    vec2 v_cloud=v_Texcoord+vec2(u_time*0.02,0.0);
+    vec2 v_cloud=v_Texcoord+vec2(u_time*0.25,0.0);
     //vec2 v_cloud=v_Texcoord;
     //v_cloud+=vec2(u_time,u_time);
     vec3 cloudColor=texture2D(u_Cloud,v_cloud).rgb;
