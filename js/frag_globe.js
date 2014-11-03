@@ -265,7 +265,7 @@
         gl.uniformMatrix4fv(u_ViewLocation, false, view);
         gl.uniformMatrix4fv(u_PerspLocation, false, persp);
         gl.uniformMatrix4fv(u_InvTransLocation, false, invTrans);
-
+        gl.uniform1f(u_timeLocation,time);
         gl.uniform3fv(u_CameraSpaceDirLightLocation, lightdir);
 
         gl.activeTexture(gl.TEXTURE0);
