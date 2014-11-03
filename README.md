@@ -19,7 +19,7 @@ By taking the dot product of the light direction and normal direciton of each ve
 
 Using the cloud map and cloudTrans map, I mixed the terrian color with cloud. The coordinate of cloud is shifted by time to make it move.
 
-![](step2_addCloud)
+![](step2_addCloud.png)
 
 * Add Bump mapping
 * Add Rim lighting
