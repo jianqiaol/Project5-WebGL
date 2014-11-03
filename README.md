@@ -1,21 +1,8 @@
 -------------------------------------------------------------------------------
-CIS565: Project 5: WebGL
+This project has a wave renderer and a globe renderer implemented using WebGL.
+To run the demo, you need a WebGL capable browser. FireFox is recommended.
 -------------------------------------------------------------------------------
-Fall 2014
--------------------------------------------------------------------------------
-Due Monday 11/03/2014
--------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------
-NOTE:
--------------------------------------------------------------------------------
-This project requires any graphics card with support for a modern OpenGL 
-pipeline. Any AMD, NVIDIA, or Intel card from the past few years should work 
-fine, and every machine in the SIG Lab and Moore 100 is capable of running 
-this project.
-
-This project also requires a WebGL capable browser. The project is known to 
-have issues with Chrome on windows, but Firefox seems to run it fine.
+![](step5_addwatersimulation.png)
 
 -------------------------------------------------------------------------------
 INTRODUCTION:
