@@ -55,6 +55,11 @@
     var u_EarthSpecLocation;
     var u_BumpLocation;
     var u_timeLocation;
+    var low_colorLocation;
+    var high_colorLocation;
+    var lowColor=[1.0,0.0,0.0,0.0];
+    var highColor=[0.0,0.0,1.0,0.0];
+
 
     (function initializeShader() {
         var vs = getShaderSource(document.getElementById("vs"));
@@ -76,6 +81,8 @@
         u_BumpLocation = gl.getUniformLocation(program,"u_Bump");
         u_timeLocation = gl.getUniformLocation(program,"u_time");
         u_CameraSpaceDirLightLocation = gl.getUniformLocation(program,"u_CameraSpaceDirLight");
+        low_colorLocation=gl.getUniformLocation(program,"low_color");
+        high_colorLocation=gl.getUniformLocation(program,"high_color");
 
         gl.useProgram(program);
     })();
@@ -267,7 +274,10 @@
         gl.uniformMatrix4fv(u_InvTransLocation, false, invTrans);
         gl.uniform1f(u_timeLocation,time);
         gl.uniform3fv(u_CameraSpaceDirLightLocation, lightdir);
-
+        gl.uniform3fv(low_colorLocation,lowColor);
+        gl.uniform3fv(high_colorLocation,highColor);
+ 
+ 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, dayTex);
         gl.uniform1i(u_DayDiffuseLocation, 0);
@@ -287,6 +297,7 @@
         gl.bindTexture(gl.TEXTURE_2D, specTex);
         gl.uniform1i(u_EarthSpecLocation, 5);
         gl.drawElements(gl.TRIANGLES, numberOfIndices, gl.UNSIGNED_SHORT,0);
+ 
 
         time += 0.001;
         window.requestAnimFrame(animate);
