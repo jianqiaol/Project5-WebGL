@@ -5,6 +5,7 @@ To run the demo, you need a WebGL capable browser like FireFox.
 ![](step5_addwatersimulation.png)
 
 [Video here](https://www.youtube.com/watch?v=zg2oQxpIPbA&feature=youtu.be)
+
 [Live demo](http://jianqiaol.github.io/Project5-WebGL/)
 
 ###Globe renderer Walk through
